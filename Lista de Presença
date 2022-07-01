@@ -1,0 +1,199 @@
+INDEX.Jsx_____________________
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App.jsx';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+App.Jsx_____________________________
+
+import React, {useState} from 'react';
+import './App.css';
+import {Cartao} from './Card'
+
+
+
+
+function App() {
+  const [studentName, setStudentName] = useState('');
+  const [students, setStudents] = useState([])
+
+function handleAddStudent(name){
+  const newStudent = {
+    name: studentName,
+    time: new Date().toLocaleTimeString("pt-br", {
+      hour: '2-digit',
+      minute: '2-digit',
+      second : '2-digit' })
+
+
+
+   }
+   setStudents( prevState => [...prevState, newStudent]);
+
+}
+
+
+
+  return(
+    <div className='container'>
+    <h1>Lista de Presença</h1>
+    <input type="text" placeholder='Digite o nome' 
+   onChange={e => setStudentName(e.target.value)}
+    />
+    <button type='button'  onClick= {handleAddStudent} 
+    >Adicionar</button >
+
+   { 
+    students.map(student => <Cartao  key={student.time}
+     name={student.name} time={student.time} />)
+}
+    
+
+    </div>
+  )
+  
+}
+
+ 
+
+export default App;
+
+
+
+App.Css____________________________
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;  
+}
+
+.container h1{
+    margin: 84px 0 24px;
+}
+.container input{
+    width: 50%;
+    padding: 24px;
+
+    background: #e6e6e6;
+    border-radius: 5px;
+    border: none;
+    
+    font-size: 16px;
+}
+
+.container button {
+    width: 50%;
+    padding: 24px;
+    font-weight: 700;
+
+    background: #EA4c89;
+    color: #ffffff;
+
+    border-radius: 5px;
+    margin:12px 0 84px;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s;
+    font-size: 16px;
+
+}
+.container button:hover{
+    filter: brightness(0.9);
+}
+
+
+ /* Card Css: */
+
+
+ .card{
+    height: 100px;
+    width: 50%;
+
+    background: #735bf2;
+    color: #fff;
+
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+ }
+ 
+ 
+ 
+ 
+ Card.jsx______________________
+ 
+  import './App.css'
+ 
+ export function Cartao(props){
+    return(
+        <div className='card'>
+            <strong>{props.name}</strong>
+            <small>{props.time}</small>
+        </div>
+    )
+}
+
+
+
+App.teste.js________________________________
+import { render, screen } from '@testing-library/react';
+import App from './App';
+
+test('renders learn react link', () => {
+  render(<App />);
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+
+
+
+
+
+
+ReportWevVitals.js_____________________________
+const reportWebVitals = onPerfEntry => {
+  if (onPerfEntry && onPerfEntry instanceof Function) {
+    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+      getCLS(onPerfEntry);
+      getFID(onPerfEntry);
+      getFCP(onPerfEntry);
+      getLCP(onPerfEntry);
+      getTTFB(onPerfEntry);
+    });
+  }
+};
+
+export default reportWebVitals;
+
+
+setupteste.js________________________________
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+import '@testing-library/jest-dom';
